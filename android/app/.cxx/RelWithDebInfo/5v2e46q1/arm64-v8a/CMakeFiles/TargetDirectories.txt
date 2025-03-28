@@ -1,9 +1,0 @@
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/CMakeFiles/appmodules.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/CMakeFiles/edit_cache.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/CMakeFiles/rebuild_cache.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/safeareacontext_autolinked_build/CMakeFiles/edit_cache.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/safeareacontext_autolinked_build/CMakeFiles/rebuild_cache.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/rnscreens_autolinked_build/CMakeFiles/react_codegen_rnscreens.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/rnscreens_autolinked_build/CMakeFiles/edit_cache.dir
-G:/React Native/TODO/Expo todo/TODO/android/app/.cxx/RelWithDebInfo/5v2e46q1/arm64-v8a/rnscreens_autolinked_build/CMakeFiles/rebuild_cache.dir
