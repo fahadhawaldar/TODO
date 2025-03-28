@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,20 +8,57 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Platform,
+  useColorScheme,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
-import { createTodo } from "../store/TodosSlice";
+import { createTodo, editTodos } from "../store/TodosSlice";
+import { useRoute, RouteProp } from "@react-navigation/native";
+import StyledView from "../components/StyledView";
+import StyledText from "../components/StyledText";
+import { darkColor, lightColor } from "../utils/color";
 
 type Props = {
   navigation: NativeStackNavigationProp<any>;
 };
 
 const AddTodoScreen = ({ navigation }: Props) => {
-  const [todo, setTodo] = React.useState("");
+  const isDark = useColorScheme() === "dark";
   const dispatch = useDispatch();
+  const route =
+    useRoute<RouteProp<{ params: { id: string; title: string } }, "params">>();
+  const id = route.params?.id;
+  const isEditing = !!id;
+  const [todo, setTodo] = React.useState(route.params?.title || "");
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTintColor: isDark ? lightColor : darkColor,
+      headerStyle: { backgroundColor: isDark ? darkColor : lightColor },
+    });
+  }, [isDark]);
+
+  useEffect(() => {
+    if (isEditing) {
+      navigation.setOptions({ title: "Edit Todo" });
+    }
+  }, [isEditing]);
 
   const handleAddTodo = () => {
+    if (isEditing) {
+      dispatch(
+        editTodos({
+          title: todo,
+          userId: 0,
+          id: Number(id),
+          completed: false,
+        })
+      );
+      navigation.goBack();
+      setTodo("");
+      return;
+    }
+
     if (todo.trim()) {
       dispatch(
         createTodo({
@@ -37,33 +74,39 @@ const AddTodoScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "padding"}
-      style={styles.container}
-    >
-      <StatusBar barStyle="dark-content" backgroundColor="#f4f4f4" />
-      <Text style={styles.heading}>Create a New Todo</Text>
-      <TextInput
-        onChangeText={setTodo}
-        value={todo}
-        style={styles.input}
-        ref={(node) => node && node.focus()}
-        placeholder="What would you like to do?"
-        placeholderTextColor="#888"
-        clearButtonMode="while-editing"
-        returnKeyType="done"
-      />
-      <TouchableOpacity
-        onPress={handleAddTodo}
-        style={[
-          styles.btn,
-          todo.trim() ? styles.btnActive : styles.btnInactive,
-        ]}
-        disabled={!todo.trim()}
+    <StyledView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "padding"}
+        style={styles.container}
       >
-        <Text style={styles.btnText}>Add Todo</Text>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
+        <StatusBar barStyle="dark-content" backgroundColor="#f4f4f4" />
+        <StyledText style={styles.heading}>
+          {isEditing ? "Edit Todo" : "Create a New Todo"}
+        </StyledText>
+        <TextInput
+          onChangeText={setTodo}
+          value={todo}
+          style={[styles.input, { color: isDark ? lightColor : darkColor }]}
+          ref={(node) => node && node.focus()}
+          placeholder="What would you like to do?"
+          placeholderTextColor="#888"
+          clearButtonMode="while-editing"
+          returnKeyType="done"
+        />
+        <TouchableOpacity
+          onPress={handleAddTodo}
+          style={[
+            styles.btn,
+            todo.trim() ? styles.btnActive : styles.btnInactive,
+          ]}
+          disabled={!todo.trim()}
+        >
+          <Text style={styles.btnText}>
+            {isEditing ? "Update Todo" : "Add Todo"}
+          </Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </StyledView>
   );
 };
 
@@ -72,17 +115,17 @@ export default AddTodoScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f4f4f4",
+
     paddingHorizontal: 20,
     justifyContent: "center",
-    paddingBottom: 50, // Add some bottom padding
+    paddingBottom: 50,
   },
   heading: {
     fontSize: 28,
     fontWeight: "700",
-    marginBottom: 30,
+    marginBottom: 20,
     color: "#333",
-    textAlign: "center",
+    // textAlign: "center",
     letterSpacing: -0.5,
   },
   input: {
@@ -91,13 +134,13 @@ const styles = StyleSheet.create({
     borderColor: "#e0e0e0",
     borderRadius: 10,
     marginBottom: 20,
-    backgroundColor: "white",
+
     fontSize: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
+    // elevation: 3,
   },
   btn: {
     padding: 15,

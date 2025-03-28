@@ -4,11 +4,11 @@
     "slug": "TODO",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/TODO.png",
+    "userInterfaceStyle": "dark-light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/TODO.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,9 +17,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/TODO.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fahaddevl.TODO"
     },
     "web": {
       "favicon": "./assets/favicon.png"

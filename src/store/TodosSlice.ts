@@ -18,9 +18,16 @@ const TodosSlice = createSlice({
   initialState,
   reducers: {
     addTodos: (state, action: { payload: TodosState[] }) => {
+      // Extract the new todos from the action payload
       const newTodos = action.payload;
 
-      state.Todos = newTodos;
+      // Merge new todos with existing ones, ensuring no duplicate ids
+      state.Todos = [
+        ...state.Todos,
+        ...newTodos.filter(
+          (newTodo) => !state.Todos.some((todo) => todo.id === newTodo.id)
+        ),
+      ];
     },
     createTodo: (state, action: { payload: TodosState }) => {
       const newTodo = {
@@ -47,7 +54,13 @@ const TodosSlice = createSlice({
     toggleCompleted: (state, action: { payload: number }) => {
       const id = action.payload;
       state.Todos = state.Todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+              updatedAt: new Date().toString(),
+            }
+          : todo
       );
     },
   },
